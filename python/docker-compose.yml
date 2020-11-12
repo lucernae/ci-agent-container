@@ -1,0 +1,9 @@
+version: '3'
+services:
+  python-ci-agent:
+    image: ${REPO_NAME}/python-ci-agent:${TAG}
+    build:
+      args:
+        BASE_IMAGE: ${BASE_IMAGE}
+      context: .
+      dockerfile: Dockerfile

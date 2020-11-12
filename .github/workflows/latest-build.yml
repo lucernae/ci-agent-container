@@ -1,0 +1,26 @@
+name: latest-build
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version:
+          - 3.7
+          - 3.8
+          - 3.9
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd python/ci
+      - run: cp -f env_matrix/python-${{ matrix.python_version}}.env .env
+      - run: source .env
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: lucernae/python-ci-agent:${{ matrix.python_version }}
+          tag_with_ref: true

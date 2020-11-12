@@ -1,0 +1,9 @@
+version: '3'
+services:
+  python-ci-agent:
+    command: single_script.py arg1 arg2 arg3
+    environment:
+      ROOT_DIR: /data
+      REQUIREMENTS_FILE: /data/requirements.txt
+    volumes:
+    - ${PWD}/ci:/data
